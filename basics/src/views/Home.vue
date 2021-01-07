@@ -1,9 +1,13 @@
 <template>
   <div class="container">
     <h1>Hello {{ student }}</h1>
-    <button v-on:click="changeStudent">Change Student</button>
-    <h3>{{ animal }}</h3>
-    <button @click="changeAnimal">Change Animal</button>
+    <button @click="open = !open">Apply Transition?</button>
+    <transition name="fade">
+      <h3 v-if="open">{{ animal }}</h3>
+    </transition>
+    <button @click="changeAnimal">
+      Change Animal
+    </button>
     <ul>
       <li v-for="animal in animals" :key="animal">{{ animal }}</li>
     </ul>
@@ -23,9 +27,10 @@ export default {
   data() {
     return {
       student: "Harry",
-      animals: ["horse", "savva", "pig", "Zebra", "lion"],
+      animals: ["Horse", "Savva", "Pig", "Zebra", "Lion"],
       animal: "",
       isLoggedIn: false,
+      open,
     };
   },
   methods: {
@@ -57,5 +62,14 @@ h1 {
 }
 button {
   font-size: 2rem;
+}
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
 }
 </style>
